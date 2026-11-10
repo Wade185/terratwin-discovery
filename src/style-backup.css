@@ -1,0 +1,598 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* =========================================
+   01. GLOBAL DESIGN SYSTEM
+========================================= */
+
+:root {
+  --bg: #080e19;
+  --panel: #101b2a;
+  --panel-light: #172a40;
+  --border: #293b50;
+  --accent: #48e6d0;
+  --text: #edf5ff;
+  --muted: #9aacc2;
+  --muted-dark: #8194ad;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(ellipse at 80% 0%, #142d43 0%, transparent 38%),
+    var(--bg);
+  color: var(--text);
+  font-family: 'Manrope', sans-serif;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================================
+   02. HEADER
+========================================= */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 5%;
+  border-bottom: 1px solid #203044;
+  background: rgba(8, 14, 25, 0.92);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 25px;
+  font-weight: 800;
+  transform: rotate(-4deg);
+}
+
+.brand h1 {
+  font-size: 17px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.brand h1 span {
+  color: var(--accent);
+}
+
+.brand p {
+  color: var(--muted-dark);
+  margin: 5px 0 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.status {
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.status i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* =========================================
+   03. MAIN CONTENT
+========================================= */
+
+main {
+  max-width: 1250px;
+  margin: auto;
+  padding: 0 35px;
+}
+
+/* =========================================
+   04. HERO SECTION
+========================================= */
+
+.hero {
+  padding: 85px 0 45px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 1.5px;
+  font-size: 10px;
+}
+
+.hero h2 {
+  font-size: clamp(35px, 6vw, 65px);
+  line-height: 1.15;
+  letter-spacing: -2px;
+  margin: 20px 0;
+}
+
+.hero h2 span {
+  color: #91a9c8;
+}
+
+.intro {
+  max-width: 610px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* =========================================
+   05. RESEARCH CONTROLS
+========================================= */
+
+.control-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 18px;
+  align-items: end;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 23px;
+  border-radius: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field label {
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.field select {
+  width: 100%;
+  padding: 13px;
+  border-radius: 6px;
+  border: 1px solid #33485f;
+  background: #152437;
+  color: white;
+  outline: none;
+}
+
+.field select:focus {
+  border-color: var(--accent);
+}
+
+#explore {
+  background: var(--accent);
+  border: 0;
+  padding: 15px 20px;
+  border-radius: 6px;
+  color: #07151a;
+  font-size: 11px;
+  font-weight: 800;
+  transition: .2s;
+}
+
+#explore:hover {
+  background: #a1fff1;
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   06. SECTION HEADINGS
+========================================= */
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 60px 0 22px;
+  gap: 15px;
+}
+
+.section-title h2 {
+  font-size: 25px;
+  margin: 10px 0;
+}
+
+.tag {
+  color: var(--muted);
+  border: 1px solid #33485f;
+  padding: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* =========================================
+   07. INTERACTIVE MAP LAYOUT
+========================================= */
+
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 18px;
+  margin-bottom: 45px;
+  align-items: stretch;
+}
+
+/* Map container */
+
+#earth-map {
+  width: 100%;
+  height: 480px;
+  min-height: 350px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #101b2a;
+  z-index: 1;
+}
+
+/* Leaflet controls */
+
+.leaflet-container {
+  font-family: 'Manrope', sans-serif;
+}
+
+.leaflet-control-zoom a {
+  background: #101b2a !important;
+  color: var(--accent) !important;
+  border-color: var(--border) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #172a40 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(8, 14, 25, .85) !important;
+  color: #c0d0e0 !important;
+  font-size: 9px !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--accent) !important;
+}
+
+/* Map popups */
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #101b2a;
+  color: var(--text);
+}
+
+.leaflet-popup-content {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.leaflet-popup-content strong {
+  color: var(--accent);
+}
+
+/* =========================================
+   08. MAP SIDEBAR
+========================================= */
+
+.map-sidebar {
+  padding: 22px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.map-sidebar h3 {
+  font-size: 18px;
+  margin: 15px 0 22px;
+}
+
+.site-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-align: left;
+  margin-bottom: 10px;
+  padding: 13px;
+  background: var(--panel-light);
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: .2s;
+}
+
+.site-button:hover {
+  border-color: var(--accent);
+  background: #1b354a;
+  transform: translateX(3px);
+}
+
+.site-button span {
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+}
+
+.site-button div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.site-button strong {
+  font-size: 12px;
+}
+
+.site-button small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* Selected location information */
+
+.site-info {
+  margin-top: 24px;
+  padding: 15px;
+  background: #0b1522;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.site-info strong {
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.site-info p {
+  color: var(--muted);
+  margin: 8px 0;
+}
+
+.site-info small {
+  color: var(--accent);
+  font-size: 10px;
+}
+
+/* =========================================
+   09. LOCATION CARDS
+========================================= */
+
+.locations {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.location {
+  background: linear-gradient(145deg, #172a40, #0e1725);
+  border: 1px solid var(--border);
+  padding: 25px;
+  border-radius: 9px;
+  transition: .25s;
+}
+
+.location:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 35px rgba(72, 230, 208, .07);
+}
+
+.number {
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.location h3 {
+  margin-top: 28px;
+  font-size: 20px;
+}
+
+.location p,
+.location small {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.location small {
+  font-size: 11px;
+}
+
+.divider {
+  height: 1px;
+  background: #33485f;
+  margin: 25px 0 15px;
+}
+
+/* =========================================
+   10. SCIENTIFIC REPORT
+========================================= */
+
+.report {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  margin: 28px 0 65px;
+  padding: 18px;
+  border: 1px solid #33485f;
+  border-radius: 9px;
+  background: #111d2c;
+  color: #b9c9da;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.report > span {
+  color: var(--accent);
+  font-size: 23px;
+}
+
+.report p {
+  margin: 0;
+}
+
+.report strong {
+  color: white;
+}
+
+/* =========================================
+   11. FOOTER
+========================================= */
+
+footer {
+  border-top: 1px solid #203044;
+  padding: 25px 5%;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  color: var(--muted-dark);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* =========================================
+   12. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 950px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-sidebar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .map-sidebar .eyebrow,
+  .map-sidebar h3,
+  .site-info {
+    grid-column: 1 / -1;
+  }
+
+  .site-button {
+    margin: 0;
+  }
+}
+
+@media (max-width: 750px) {
+  main {
+    padding: 0 18px;
+  }
+
+  .topbar {
+    padding: 18px;
+  }
+
+  .brand h1 {
+    font-size: 13px;
+  }
+
+  .brand p {
+    font-size: 8px;
+  }
+
+  .status {
+    display: none;
+  }
+
+  .hero {
+    padding: 55px 0 35px;
+  }
+
+  .hero h2 {
+    letter-spacing: -1.5px;
+  }
+
+  .control-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .locations {
+    grid-template-columns: 1fr;
+  }
+
+  .map-sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-button {
+    width: 100%;
+  }
+
+  #earth-map {
+    height: 380px;
+  }
+
+  footer {
+    padding: 22px 18px;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .hero h2 {
+    font-size: 34px;
+  }
+
+  #earth-map {
+    height: 320px;
+  }
+}
