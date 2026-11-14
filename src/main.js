@@ -656,119 +656,25 @@ async function loadNASADEM() {
 // ==========================================
 
 
-function updateTerrainPassport() {
-  const isLadakh = selectedSite === 'ladakh'
-
-  const elevation = document.querySelector('#metric-elevation')
-  const slope = document.querySelector('#metric-slope')
-  const relief = document.querySelector('#metric-ruggedness')
-
-  const image = document.querySelector('#terrain-elevation-image')
-  const imageStatus = document.querySelector('#terrain-image-status')
-
-  const elevationEvidence =
-    document.querySelector('#elevation-evidence')
-
-  const slopeEvidence =
-    document.querySelector('#slope-evidence')
-
-  const validationStatus =
-    document.querySelector('#validation-status')
-
-  if (!isLadakh) {
-    elevation.textContent = 'Not available'
-    slope.textContent = 'Not available'
-    relief.textContent = 'Not available'
-
-    document.querySelector('#metric-elevation-note').textContent =
-      'Ladakh dataset only'
-
-    document.querySelector('#metric-slope-note').textContent =
-      'Site-specific analysis required'
-
-    document.querySelector('#metric-ruggedness-note').textContent =
-      'Site-specific analysis required'
-
-    image.style.display = 'none'
-    imageStatus.textContent = 'LADAKH DATASET ONLY'
-
-    elevationEvidence.textContent = 'Not connected for this site'
-    slopeEvidence.textContent = 'Not connected for this site'
-
-    validationStatus.textContent = 'SITE DATA NOT CONNECTED'
-
-    return
-  }
-
-  image.style.display = 'block'
-  imageStatus.textContent = 'NASADEM VISUALIZATION'
-
-  if (!nasaTerrain || !nasaSlope) {
-    elevation.textContent = 'Loading'
-    slope.textContent = 'Loading'
-    relief.textContent = 'Loading'
-    return
-  }
-
-  elevation.textContent =
-    `${nasaTerrain.mean_elevation_m.toLocaleString('en-US', {
-      maximumFractionDigits: 2
-    })} m`
-
-  document.querySelector('#metric-elevation-note').textContent =
-    `Range: ${nasaTerrain.minimum_elevation_m.toLocaleString('en-US')}–${nasaTerrain.maximum_elevation_m.toLocaleString('en-US')} m`
-
-  slope.textContent =
-    `${nasaSlope.mean_slope_degrees.toFixed(2)}°`
-
-  document.querySelector('#metric-slope-note').textContent =
-    `Median: ${nasaSlope.median_slope_degrees.toFixed(2)}°`
-
-  relief.textContent =
-    `${nasaSlope.mean_local_relief_metres.toFixed(2)} m`
-
-  document.querySelector('#metric-ruggedness-note').textContent =
-    `Median local relief: ${nasaSlope.median_local_relief_metres.toFixed(2)} m`
-
-  elevationEvidence.textContent = 'NASADEM loaded'
-  slopeEvidence.textContent = 'Derived analysis loaded'
-
-  validationStatus.textContent = 'EARTH DATA LOADED'
-}
-
 // ==========================================
 // INTERACTIVE EARTH MAP
 // ==========================================
 
 const map = L.map('earth-map', {
   preferCanvas: true,
-  zoomControl: true
-}).setView([34.0, 77.5], 5)
+  zoomControl: true,
+  minZoom: 2,
   maxZoom: 18,
-  updateWhenIdle: true,
-  keepBuffer: 2
-}
+  worldCopyJump: true
+}).setView([20, 10], 2)
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
-  maxZoom: 18
+  maxZoom: 18,
+  updateWhenIdle: true,
+  updateWhenZooming: false,
+  keepBuffer: 2
 }).addTo(map)
-
-const markers = {}
-
-Object.entries(sites).forEach(([key, site]) => {
-
-  const marker = L.marker(site.coordinates).addTo(map)
-
-  marker.bindPopup(
-    `<strong>${site.name}</strong><br>${site.country}`
-  )
-
-  marker.on('click', () => selectSite(key))
-
-  markers[key] = marker
-
-})
 
 // ==========================================
 // LOCATION SELECTION
@@ -777,7 +683,6 @@ Object.entries(sites).forEach(([key, site]) => {
 let selectedSite = 'ladakh'
 
 function selectSite(key, fly = true) {
-
   const site = sites[key]
 
   if (!site) return
@@ -791,12 +696,10 @@ function selectSite(key, fly = true) {
   }
 
   document.querySelectorAll('.location-item').forEach(button => {
-
     button.classList.toggle(
       'active',
       button.dataset.site === key
     )
-
   })
 
   document.querySelector('#site-info').innerHTML = `
@@ -828,7 +731,6 @@ function selectSite(key, fly = true) {
     site.question
 
   updateTerrainPassport()
-
 }
 
 // ==========================================
@@ -836,17 +738,15 @@ function selectSite(key, fly = true) {
 // ==========================================
 
 document.querySelectorAll('.location-item').forEach(button => {
-
   button.addEventListener('click', () => {
-
     const key = button.dataset.site
 
     selectSite(key)
 
-    markers[key].openPopup()
-
+    if (markers[key]) {
+      markers[key].openPopup()
+    }
   })
-
 })
 
 // ==========================================
@@ -854,11 +754,8 @@ document.querySelectorAll('.location-item').forEach(button => {
 // ==========================================
 
 document.querySelector('#prepare-research').addEventListener('click', () => {
-
   const world = document.querySelector('#world').value
-
   const objective = document.querySelector('#objective').value
-
   const site = sites[selectedSite]
 
   document.querySelector('#passport-world').textContent = world
@@ -870,10 +767,8 @@ document.querySelector('#prepare-research').addEventListener('click', () => {
 
   document.querySelector('#research-result').innerHTML = `
     <span class="result-symbol">◎</span>
-
     <div>
       <strong>Investigation configuration prepared</strong>
-
       <p>
         Target: ${world} · Objective: ${objective} ·
         Candidate: ${site.name}.
@@ -881,7 +776,6 @@ document.querySelector('#prepare-research').addEventListener('click', () => {
       </p>
     </div>
   `
-
 })
 
 // ==========================================
@@ -889,7 +783,6 @@ document.querySelector('#prepare-research').addEventListener('click', () => {
 // ==========================================
 
 document.querySelector('#search-form').addEventListener('submit', event => {
-
   event.preventDefault()
 
   const query = document.querySelector('#site-search').value
@@ -908,7 +801,6 @@ document.querySelector('#search-form').addEventListener('submit', event => {
   )
 
   if (match) {
-
     selectSite(match[0])
 
     markers[match[0]].openPopup()
@@ -916,23 +808,17 @@ document.querySelector('#search-form').addEventListener('submit', event => {
     document.querySelector('#explorer').scrollIntoView({
       behavior: 'smooth'
     })
-
   } else {
-
     document.querySelector('#research-result').innerHTML = `
       <span class="result-symbol">?</span>
-
       <div>
         <strong>No matching candidate found</strong>
-
         <p>
           Try Ladakh, Atacama, Hawaii, mountain, desert or volcanic.
         </p>
       </div>
     `
-
   }
-
 })
 
 // ==========================================
@@ -940,9 +826,7 @@ document.querySelector('#search-form').addEventListener('submit', event => {
 // ==========================================
 
 document.querySelectorAll('[data-filter]').forEach(link => {
-
   link.addEventListener('click', () => {
-
     const filter = link.dataset.filter
 
     const keys = {
@@ -953,9 +837,7 @@ document.querySelectorAll('[data-filter]').forEach(link => {
     }
 
     selectSite(keys[filter])
-
   })
-
 })
 
 // ==========================================
@@ -967,11 +849,9 @@ selectSite('ladakh', false)
 loadNASADEM()
 
 window.addEventListener('load', () => {
-
-  setTimeout(() => {
+  requestAnimationFrame(() => {
     map.invalidateSize()
-  }, 200)
-
+  })
 })
 
 console.log('====================================')
