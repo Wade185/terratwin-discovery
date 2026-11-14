@@ -1,0 +1,17 @@
+{
+    "dataset": "NASADEM",
+    "file": "ladakh_nasadem.tif",
+    "width_pixels": 5400,
+    "height_pixels": 5400,
+    "coordinate_system": "EPSG:4326",
+    "pixel_size": [
+        0.0002777777777778147,
+        0.0002777777777778147
+    ],
+    "valid_samples": 29160000,
+    "minimum_elevation_m": 2918.0,
+    "maximum_elevation_m": 7647.0,
+    "mean_elevation_m": 4894.27,
+    "median_elevation_m": 5005.0,
+    "elevation_range_m": 4729.0
+}

@@ -1,0 +1,11 @@
+{
+    "dataset": "NASADEM",
+    "method": "3x3 neighbourhood terrain analysis",
+    "mean_slope_degrees": 27.447,
+    "median_slope_degrees": 28.938,
+    "mean_local_relief_metres": 40.998,
+    "median_local_relief_metres": 41.0,
+    "valid_analysis_pixels": 29138404,
+    "pixel_width_metres_approx": 25.56,
+    "pixel_height_metres_approx": 30.92
+}
